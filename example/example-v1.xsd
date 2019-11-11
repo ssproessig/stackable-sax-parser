@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="urn:example-v1" xmlns:self="urn:example-v1">
+
+    <xs:element name="root-element">
+        <xs:annotation>
+            <xs:documentation>Root element of the example definition.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="a-element">
+                    <xs:annotation>
+                        <xs:documentation>an optional A element</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="self:name" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="a-attribute-1" use="required">
+                            <xs:annotation>
+                                <xs:documentation>a string attribute</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="enum1"/>
+                                    <xs:enumeration value="enum2"/>
+                                    <xs:enumeration value="enum3"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="b-element" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>the b element</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="self:name" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="b-attribute-1" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>an integer b attribute</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" use="required">
+                <xs:annotation>
+                    <xs:documentation>mandatory version of the element</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:enumeration value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="name">
+        <xs:annotation>
+            <xs:documentation>a name child-element that supports localized names</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="language" type="xs:language" use="required">
+                <xs:annotation>
+                    <xs:documentation>language the name is given in</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="name" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>the actual localized name</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
