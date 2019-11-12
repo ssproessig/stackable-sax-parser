@@ -8,7 +8,7 @@
         <name language="de" name="name7"/>
     </b-element>
     <b-element b-attribute-1="2">
-        <name language="en-US" name="name5"/>
+        <name language="en-US">long content</name>
         <name language="no" name="name7"/>
     </b-element>
 </root-element>
