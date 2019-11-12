@@ -62,6 +62,15 @@ public class StackableContext {
   }
 
   /**
+   * Returns the current top-most handler
+   *
+   * @return the top-most handler from the stack
+   */
+  public BaseHandler<?> handler() {
+    return handlers.peek();
+  }
+
+  /**
    * Finds the next handler from the stack that is able to handle the current element.
    *
    * @param localName local name of the element currently being handled
