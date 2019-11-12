@@ -37,7 +37,7 @@ public class StackableParser {
     BaseHandler rootHandler;
 
     try {
-      rootHandler = aRootHandlerClass.getConstructor(StackableContext.class).newInstance(aContext);
+      rootHandler = aRootHandlerClass.getConstructor(Context.class).newInstance(aContext);
     } catch (InstantiationException
         | IllegalAccessException
         | InvocationTargetException

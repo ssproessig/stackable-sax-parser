@@ -18,7 +18,9 @@ class Application {
     try {
       val context = new Context();
       StackableParser.parse(fileName, RootElementHandler.class, context);
-      log.info("XML parsed: {}", context);
+
+      log.info("Context information parsed:");
+      context.getLoggedEvents().forEach(log::info);
     } catch (SAXException e) {
       log.error("Error parsing XML: {}", ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {

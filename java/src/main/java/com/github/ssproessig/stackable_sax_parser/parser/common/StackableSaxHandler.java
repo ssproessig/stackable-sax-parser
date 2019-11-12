@@ -3,7 +3,7 @@ package com.github.ssproessig.stackable_sax_parser.parser.common;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class StackableSaxHandler extends BaseHandler {
+public class StackableSaxHandler extends BaseHandler<StackableContext> {
 
   /**
    * Initializes the stackable SAX parser.
@@ -14,7 +14,7 @@ public class StackableSaxHandler extends BaseHandler {
    * @param aContext shared context that contains the handler stack
    * @param aHandler root element handler to start with
    */
-  public StackableSaxHandler(StackableContext aContext, BaseHandler aHandler) {
+  public StackableSaxHandler(StackableContext aContext, BaseHandler<StackableContext> aHandler) {
     super(aContext, null);
     aContext.pushHandler(aHandler);
   }
