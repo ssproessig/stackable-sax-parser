@@ -12,7 +12,7 @@ public class StackableContext {
    * A "last resort" matching-everything element handler that consumes everything forwarded to it.
    */
   @Slf4j
-  private static class MatchingAllElementsHandler extends BaseHandler {
+  private static class MatchingAllElementsHandler extends BaseHandler<StackableContext> {
 
     public MatchingAllElementsHandler() {
       super(null, null);
@@ -35,7 +35,7 @@ public class StackableContext {
   }
 
   // stack of all SAX handlers
-  protected LinkedList<BaseHandler> handlers = new LinkedList<>();
+  protected LinkedList<BaseHandler<?>> handlers = new LinkedList<>();
 
   /** Initializes the context and put the "all consuming" handler there */
   public StackableContext() {
@@ -47,7 +47,7 @@ public class StackableContext {
    *
    * @param aHandler a handler to put on the stack
    */
-  public void pushHandler(BaseHandler aHandler) {
+  public void pushHandler(BaseHandler<?> aHandler) {
     handlers.push(aHandler);
   }
 
@@ -56,7 +56,7 @@ public class StackableContext {
    *
    * @return the popped handler from the stack
    */
-  public BaseHandler popHandler() {
+  public BaseHandler<?> popHandler() {
     handlers.pop();
     return handlers.peek();
   }
@@ -67,9 +67,9 @@ public class StackableContext {
    * @param localName local name of the element currently being handled
    * @return the next SAX handler to use
    */
-  public BaseHandler handlerFor(String localName) {
+  public BaseHandler<?> handlerFor(String localName) {
     // per default use the top-most handler from the stack
-    BaseHandler nextHandler = handlers.peek();
+    BaseHandler<?> nextHandler = handlers.peek();
 
     // ... and until the handler handles the localName, pop the next handler from the stack
     while (nextHandler != null && !nextHandler.handles(localName)) {
