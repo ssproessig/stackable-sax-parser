@@ -26,6 +26,11 @@ public class StackableSaxHandler extends BaseHandler<StackableContext> {
   }
 
   @Override
+  public void characters(char[] ch, int start, int length) throws SAXException {
+    context.handler().characters(ch, start, length);
+  }
+
+  @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     context.handlerFor(localName).endElement(uri, localName, qName);
   }
