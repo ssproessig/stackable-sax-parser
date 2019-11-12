@@ -1,6 +1,8 @@
-package com.github.ssproessig.stackable_sax_parser.parser;
+package com.github.ssproessig.stackable_sax_parser.parser.common;
 
+import com.github.ssproessig.stackable_sax_parser.parser.Context;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -10,7 +12,7 @@ import org.xml.sax.SAXException;
 
 @UtilityClass
 @Slf4j
-public class ExampleParser {
+public class StackableParser {
   private AbstractSAXParser getSecureSAXParser() throws SAXException {
     // create a parser that disables XML entity processing
     // basically try to work around OWASP Top 10-2017 A4-XML External Entities (XXE) with that
@@ -28,13 +30,23 @@ public class ExampleParser {
     return saxParser;
   }
 
-  public static Context parse(String aFileName) throws SAXException, IOException {
-    val context = new Context();
+  public static void parse(
+      String aFileName, Class<? extends BaseHandler> aRootHandlerClass, Context aContext)
+      throws SAXException, IOException {
+
+    BaseHandler rootHandler;
+
+    try {
+      rootHandler = aRootHandlerClass.getConstructor(StackableContext.class).newInstance(aContext);
+    } catch (InstantiationException
+        | IllegalAccessException
+        | InvocationTargetException
+        | NoSuchMethodException e) {
+      throw new SAXException("Unable to create passed root element handler: " + aRootHandlerClass);
+    }
+
     val saxParser = getSecureSAXParser();
-    saxParser.setContentHandler(new RootHandler(context));
-
+    saxParser.setContentHandler(new StackableSaxHandler(aContext, rootHandler));
     saxParser.parse(new InputSource(aFileName));
-
-    return context;
   }
 }
