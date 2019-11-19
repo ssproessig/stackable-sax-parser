@@ -1,17 +1,35 @@
-# A stackable SAX parser
-
-## Problem
-SAX parsers tend to contain many condition clauses in their `startElement`/`endElement` handlers when trying to parse a non-trivial example.
-
-This also makes them hard to maintain and extend. 
+# A secure, schema-aware and stackable SAX parser
 
 ## Mission
 Find a simple approach to parse non-trivial XML files, with
 
-- possibility to split handlers into separate classes, e.g. one per XML element
-- possibility to reuse parsers for XML elements that can occurs as children of many 
+- [x] possibility to split handlers into separate classes, e.g. one per XML element
+- [x] possibility to reuse parsers for XML elements that can occur as children of other elements multiple times
+- [ ] make the parser XSD-aware, so that potential errors in the XML are already handled before parsing
+- [ ] ensure that injections can not happen via strings parsed from XML 
 
-## Example
+## Problems in Detail
+
+### Stackable SAX parser
+SAX parsers tend to contain many condition clauses in their `startElement`/`endElement` handlers when trying to parse a non-trivial example.
+
+This also makes them hard to maintain and extend. Hence we want to
+
+- split the parser into different SAX handlers and
+- want to reuse handlers if an XML element is a child in many other elements 
+
+### Schema-Aware
+Ensure that parsing the XML file can validate against given XSDs.
+
+As complex XML dialects may come with several XSDs, make it possible to pass an XML catalog into the parser for lookup and validation.
+
+### Secure
+Parsing data via XML into a system may lead to several security problems, e.g.
+
+- [OWASP Top 10-2017](https://www.owasp.org/index.php/Top_10-2017_Top_10): A4:2017-XML External Entities (XXE)
+- OWASP Top 10-2017: A7:2017-Cross-Site Scripting (XSS)
+
+## Complete Example
 taken from [example/example.xml](example/example.xml)
 
 ```xml
@@ -25,8 +43,8 @@ taken from [example/example.xml](example/example.xml)
         <name language="de" name="name7"/>
     </b-element>
     <b-element b-attribute-1="2">
-        <name language="en-US" name="name5"/>
-        <name language="no" name="name7"/>
+        <name language="en-US" name="<script>alert('XSS is possible');</script>"/>
+        <name language="no">name7</name>
     </b-element>
 </root-element>
 ```
@@ -35,7 +53,9 @@ basically we want
 
 - one SAX parser bootstrapping
 - three handler classes (for `a-element`, `b-element` and `name`)
-- reuse the `name` handler 
+- reuse the `name` handler
+- ensure that no XML External Entity processing happened
+- the XSS attempt in the 2nd `<b-element/>` was filtered and reported
 
 ## Usage
 ### Invocation
@@ -47,6 +67,8 @@ class Application {
     val fileName = "example/example.xml";
 
     try {
+      // TODO: prepare XML catalog and use it
+      // TODO: report validation errors OR injection attempts
       val context = new Context();
       StackableParser.parse(fileName, RootElementHandler.class, context);
       log.info("XML parsed: {}", context);
