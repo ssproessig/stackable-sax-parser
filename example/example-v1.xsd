@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="urn:example-v1" xmlns:self="urn:example-v1">
-
+    <xs:include schemaLocation="example-common-v1.xsd"/>
     <xs:element name="root-element">
         <xs:annotation>
             <xs:documentation>Root element of the example definition.</xs:documentation>
@@ -55,23 +55,6 @@
                         <xs:enumeration value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
-            </xs:attribute>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="name">
-        <xs:annotation>
-            <xs:documentation>a name child-element that supports localized names</xs:documentation>
-        </xs:annotation>
-        <xs:complexType mixed="true">
-            <xs:attribute name="language" type="xs:language" use="required">
-                <xs:annotation>
-                    <xs:documentation>language the name is given in</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="name" type="xs:string" use="optional">
-                <xs:annotation>
-                    <xs:documentation>the actual localized name</xs:documentation>
-                </xs:annotation>
             </xs:attribute>
         </xs:complexType>
     </xs:element>

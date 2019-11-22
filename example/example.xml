@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <root-element xmlns="urn:example-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:example-v1 example-v1.xsd" version="1">
     <a-element a-attribute-1="enum1">
         <name language="en-US" name="name1"/>
