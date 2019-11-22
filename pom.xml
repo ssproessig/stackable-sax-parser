@@ -6,7 +6,7 @@
   <groupId>com.github.ssproessig.stackable-sax-parser</groupId>
   <artifactId>stackable-sax-parser</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0</version>
   <name>stackable-sax-parser</name>
   <description>A SAX parser implementation that can be stacked</description>
 
