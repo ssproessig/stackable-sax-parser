@@ -1,4 +1,6 @@
 # A secure, schema-aware and stackable SAX parser
+![](https://github.com/ssproessig/stackable-sax-parser/workflows/Java%20CI/badge.svg)
+
 
 ## Mission
 Find a simple approach to parse non-trivial XML files, with
