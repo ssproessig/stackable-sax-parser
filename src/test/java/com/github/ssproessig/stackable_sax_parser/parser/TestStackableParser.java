@@ -17,7 +17,7 @@ class TestStackableParser {
   @Test
   void testParsingExampleXmlShallSucceed() throws SAXException, IOException {
     val context = new Context();
-    StackableParser.parse("../example/example.xml", RootElementHandler.class, context);
+    StackableParser.parse("example/example.xml", RootElementHandler.class, context);
 
     val loggedEvents = context.getLoggedEvents();
     assertThat(loggedEvents.size(), is(equalTo(8)));
