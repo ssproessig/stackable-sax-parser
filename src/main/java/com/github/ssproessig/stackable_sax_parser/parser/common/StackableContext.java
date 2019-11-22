@@ -15,10 +15,11 @@ public class StackableContext {
   private static class MatchingAllElementsHandler extends BaseHandler<StackableContext> {
 
     public MatchingAllElementsHandler() {
-      super(null, null);
+      super(null, null, null);
     }
 
-    public boolean handles(String localName) {
+    @Override
+    public boolean handles(String uri, String localName) {
       // this handler will handle all elements - as it's the "last resort"
       return true;
     }
@@ -73,15 +74,16 @@ public class StackableContext {
   /**
    * Finds the next handler from the stack that is able to handle the current element.
    *
+   * @param uri XML namespace of the element being handled
    * @param localName local name of the element currently being handled
    * @return the next SAX handler to use
    */
-  public BaseHandler<?> handlerFor(String localName) {
+  public BaseHandler<?> handlerFor(String uri, String localName) {
     // per default use the top-most handler from the stack
     BaseHandler<?> nextHandler = handlers.peek();
 
     // ... and until the handler handles the localName, pop the next handler from the stack
-    while (nextHandler != null && !nextHandler.handles(localName)) {
+    while (nextHandler != null && !nextHandler.handles(uri, localName)) {
       nextHandler = popHandler();
     }
 

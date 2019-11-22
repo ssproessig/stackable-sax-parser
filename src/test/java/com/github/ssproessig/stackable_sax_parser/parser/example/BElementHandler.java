@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
 public class BElementHandler extends BaseHandler<Context> {
 
   public BElementHandler(Context aContext) {
-    super(aContext, "b-element");
+    super(aContext, XmlNamespaces.EXAMPLE, "b-element");
   }
 
   @Override

@@ -12,7 +12,7 @@ public class NameElementHandler extends BaseHandler<Context> {
   private String nameSeen;
 
   public NameElementHandler(Context context) {
-    super(context, "name");
+    super(context, XmlNamespaces.EXAMPLE, "name");
   }
 
   @Override

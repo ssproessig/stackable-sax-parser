@@ -12,7 +12,7 @@ public class RootElementHandler extends BaseHandler<Context> {
   private static final String EXPECTED_VERSION = "1";
 
   public RootElementHandler(Context aContext) {
-    super(aContext, "root-element");
+    super(aContext, XmlNamespaces.EXAMPLE, "root-element");
   }
 
   @Override
@@ -29,5 +29,6 @@ public class RootElementHandler extends BaseHandler<Context> {
 
     context.pushHandler(new BElementHandler(context));
     context.pushHandler(new AElementHandler(context));
+    context.pushHandler(new MetaInfoHandler(context));
   }
 }

@@ -15,14 +15,14 @@ public class StackableSaxHandler extends BaseHandler<StackableContext> {
    * @param aHandler root element handler to start with
    */
   public StackableSaxHandler(StackableContext aContext, BaseHandler<StackableContext> aHandler) {
-    super(aContext, null);
+    super(aContext, null, null);
     aContext.pushHandler(aHandler);
   }
 
   @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes)
       throws SAXException {
-    context.handlerFor(localName).startElement(uri, localName, qName, attributes);
+    context.handlerFor(uri, localName).startElement(uri, localName, qName, attributes);
   }
 
   @Override
@@ -32,6 +32,6 @@ public class StackableSaxHandler extends BaseHandler<StackableContext> {
 
   @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
-    context.handlerFor(localName).endElement(uri, localName, qName);
+    context.handlerFor(uri, localName).endElement(uri, localName, qName);
   }
 }

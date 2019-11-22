@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
 public class AElementHandler extends BaseHandler<Context> {
 
   public AElementHandler(Context aContext) {
-    super(aContext, "a-element");
+    super(aContext, XmlNamespaces.EXAMPLE, "a-element");
   }
 
   @Override
