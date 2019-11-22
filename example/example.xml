@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<root-element xmlns="urn:example-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:example-v1 example-v1.xsd" version="1">
+<root-element xmlns="urn:example-v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1">
     <meta-info xmlns="urn:meta-info-v1" version="1">
         <author name="John Doe"/>
         <author name="Kari Nordmann" contact="kari@nordmann.no"/>
