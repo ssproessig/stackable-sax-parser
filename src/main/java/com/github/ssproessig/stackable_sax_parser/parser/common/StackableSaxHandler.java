@@ -14,7 +14,8 @@ public class StackableSaxHandler extends BaseHandler<StackableContext> {
    * @param aContext shared context that contains the handler stack
    * @param aHandler root element handler to start with
    */
-  public StackableSaxHandler(StackableContext aContext, BaseHandler<StackableContext> aHandler) {
+  public StackableSaxHandler(
+      StackableContext aContext, BaseHandler<? extends StackableContext> aHandler) {
     super(aContext, null, null);
     aContext.pushHandler(aHandler);
   }

@@ -31,10 +31,12 @@ public class StackableParser {
   }
 
   public static void parse(
-      String aFileName, Class<? extends BaseHandler> aRootHandlerClass, Context aContext)
+      String aFileName,
+      Class<? extends BaseHandler<? extends StackableContext>> aRootHandlerClass,
+      Context aContext)
       throws SAXException, IOException {
 
-    BaseHandler rootHandler;
+    BaseHandler<? extends StackableContext> rootHandler;
 
     try {
       rootHandler = aRootHandlerClass.getConstructor(Context.class).newInstance(aContext);
