@@ -49,6 +49,8 @@ public class StackableParser {
 
     val saxParser = getSecureSAXParser();
     saxParser.setContentHandler(new StackableSaxHandler(aContext, rootHandler));
+    saxParser.setErrorHandler(new ErrorCollector());
+
     saxParser.parse(new InputSource(aFileName));
   }
 }
