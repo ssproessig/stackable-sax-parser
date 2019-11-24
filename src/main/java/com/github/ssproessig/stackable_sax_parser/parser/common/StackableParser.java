@@ -7,8 +7,11 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.xerces.parsers.AbstractSAXParser;
+import org.apache.xerces.util.XMLCatalogResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 
 @UtilityClass
 @Slf4j
@@ -30,8 +33,23 @@ public class StackableParser {
     return saxParser;
   }
 
+  private static void setXSDValidation(AbstractSAXParser saxParser)
+      throws SAXNotRecognizedException, SAXNotSupportedException {
+    saxParser.setFeature("http://xml.org/sax/features/validation", true);
+    saxParser.setFeature("http://xml.org/sax/features/namespaces", true);
+    saxParser.setFeature("http://apache.org/xml/features/validation/schema", true);
+    saxParser.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
+  }
+
+  private static void setXMLCatalogResolver(AbstractSAXParser saxParser, String[] catalogs)
+      throws SAXNotRecognizedException, SAXNotSupportedException {
+    val resolver = new XMLCatalogResolver(catalogs, true);
+    saxParser.setProperty("http://apache.org/xml/properties/internal/entity-resolver", resolver);
+  }
+
   public static void parse(
       String aFileName,
+      String anXmlCatalog,
       Class<? extends BaseHandler<? extends StackableContext>> aRootHandlerClass,
       Context aContext)
       throws SAXException, IOException {
@@ -48,6 +66,8 @@ public class StackableParser {
     }
 
     val saxParser = getSecureSAXParser();
+    setXMLCatalogResolver(saxParser, new String[] {anXmlCatalog});
+    setXSDValidation(saxParser);
     saxParser.setContentHandler(new StackableSaxHandler(aContext, rootHandler));
     saxParser.setErrorHandler(new ErrorCollector());
 
